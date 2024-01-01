@@ -1,27 +1,21 @@
-import prismadb from "@/lib/prismadb";
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function SetupLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    const { userId } = auth();
+import { useEffect } from "react";
+import { useParams } from "next/navigation";
 
-    if (!userId) {
-        redirect("/sign-in");
-    }
+import { useStoreModal } from "@/hooks/use-store-modal";
 
-    const store = await prismadb.store.findFirst({
-        where: {
-            userId,
-        },
-    });
+const SetupPage = () => {
+    const onOpen = useStoreModal((state) => state.onOpen);
+    const isOpen = useStoreModal((state) => state.isOpen);
 
-    if (store) {
-        redirect("/${store.id}");
-    }
+    useEffect(() => {
+        if (!isOpen) {
+            onOpen();
+        }
+    }, [isOpen, onOpen]);
 
-    return <>{children}</>;
-}
+    return null;
+};
+
+export default SetupPage;
