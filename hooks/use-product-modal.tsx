@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface useCategoryModalStore {
+interface useProductModalStore {
   isOpen: boolean;
   isEdit: boolean;
   editId?: string;
@@ -9,7 +9,7 @@ interface useCategoryModalStore {
   onClose: () => void;
 }
 
-export const useCategoryModal = create<useCategoryModalStore>((set) => ({
+export const useProductModal = create<useProductModalStore>((set) => ({
   isOpen: false,
   isEdit: false,
   editId: undefined,
